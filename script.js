@@ -3,21 +3,22 @@ const container = document.querySelector(".container");
 const x = document.querySelector("#x");
 const y = document.querySelector("#y");
 const confirmation = document.querySelector(".confirm");
-const clear = document.querySelector(".clear");
+const random = document.querySelector(".random");
 
 let currentNumberOfDivs = 0;
+let randomColor = false;
 
 window.onresize = () => {
-    container.height = window.innerHeight - header.height;
+    container.height = window.innerHeight - 35;
 }
 
 confirmation.onclick = () => {
     for (let a=0; a< currentNumberOfDivs; a++){
         container.removeChild(container.lastChild);
     }
-    if (x.value > 32) x.value=32;
+    if (x.value > 32) x.value=64;
     if (x.value < 1) x.value=1;
-    if (y.value > 32) y.value=32;
+    if (y.value > 32) y.value=64;
     if (y.value < 1) y.value=1;
     currentNumberOfDivs = (x.value * y.value);
 
@@ -33,8 +34,11 @@ confirmation.onclick = () => {
     let allDivs = document.querySelectorAll("div.container div");
     allDivs.forEach((e)=>{
         e.addEventListener("mouseover", ()=>{
+            if(!randomColor){
             e.style.backgroundColor = "grey";
-            console.log("hovered over");
+            } else {
+                e.style.backgroundColor = `rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)})`;
+            }
         });
     });
     allDivs = document.querySelectorAll("div.container div");
@@ -42,12 +46,10 @@ confirmation.onclick = () => {
     console.log(allDivs);
 }
 
-clear.addEventListener("click", ()=> {
-    for (let a=0; a< currentNumberOfDivs; a++){
-        container.removeChild(container.lastChild);
-    }
-    currentNumberOfDivs = 0;
-    console.log(currentNumberOfDivs);
-});
-
 //this is the part for changing color of elements
+
+random.addEventListener("click", ()=>{
+    if(!randomColor) randomColor = true;
+    else randomColor = false;
+    console.log(randomColor);
+});
